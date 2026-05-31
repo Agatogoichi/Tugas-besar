@@ -11,6 +11,12 @@ type Film struct {
 }
 type Films [NMAX]Film
 
+type CountGenre struct {
+	Genre string
+	Count int
+}
+type GENRES [NMAX]CountGenre
+
 func main() {
 	var Data Films
 	var Kondisi int
@@ -24,7 +30,7 @@ func main() {
 
 	fmt.Printf("=================Menu=================\n1. Tampilan film\n2. Input film\n3. Ubah film\n4. Hapus film\n5. Statistik \n6. Keluar\n")
 	for stop == false  {
-		fmt.Println("=====================================")
+		fmt.Println("\n=====================================")
 		fmt.Println("Pilih Menu (1-6): ")
 		fmt.Scan(&Kondisi)
 		switch Kondisi {
@@ -35,19 +41,65 @@ func main() {
 			case 3 :
 			ubahFilm(&Data)
 			case 4 :
-			hapusFilm(&Data, i-1)
+			hapusFilm(&Data, &i)
 			case 5 :
-			fmt.Println("Statistik Cinema")
+			Statistik(Data, i)
 			case 6 :
 			stop = true
 			default :
 			fmt.Println("TIdak ada pilihan")
 			}
 		}
-		fmt.Println(i)
 }
 
-//INPUT & DELETE & UPDATE////////////////////////////////////////////////////////////////////////////////
+
+
+//=====================MAIN PROGRAM NO 1 = TAMPIL =================================================================
+//fungsi untuk menampilkan film berdasarkan genre yang diinputkan
+func tampilFilm(data Films, i int) {
+	var dataGenre GENRES
+	var pilihan string
+	var index, j, banyakGenre int
+	fmt.Printf("\nMenampilkan film berdasarkan : \n1. Judul \n2. Genre \n3. Berdasarkan Tahun Rilis \n4. Berdasarkan Rating \nMasukan pilihan: ")
+	fmt.Scan(&pilihan)
+	switch pilihan {
+	case "1" :
+		UrutJudulFilm(&data, i)
+		index = TampilFilmJudul(data, i)
+		if index != -1 {
+			fmt.Printf("\nJudul: %s\nTahun Rilis: %d\nDeskripsi: %s\nGenre: %s\nRating: %.1f\n", data[index].judul, data[index].TahunRilis, data[index].Deskripsi, data[index].Genre, data[index].Rating)
+		} else {
+			fmt.Println("Film tidak ditemukan")
+		}
+	case "2" :
+		fmt.Println("=======================================")
+		BanyakGenre(data, i, &dataGenre, &banyakGenre)
+		fmt.Println("Genre yang tersedia : ")
+		for j = 0; j < banyakGenre; j++ {
+			fmt.Printf("- %s\n", dataGenre[j].Genre)
+		}
+		TampilFilmGenre(data)
+	case "3" :
+		tahunRilisFilm(&data, i)
+		fmt.Println("=======================================")
+		fmt.Printf("%-10s | %-20s | %-6s\n", "NO", "Judul", "Tahun Rilis")
+		fmt.Println("=======================================")
+		for j = 0; j < i; j++ {
+			fmt.Printf("%-10d | %-20s | %-6d\n", j+1, data[j].judul, data[j].TahunRilis)
+		}
+	case "4" :
+		ratingFilm(&data, i)
+		fmt.Println("=======================================")
+		fmt.Printf("%-10s | %-20s | %-6s\n", "NO", "Judul", "Rating")
+		fmt.Println("=======================================")
+		for j = 0; j < i; j++ {
+			fmt.Printf("%-10d | %-20s | %-6.1f\n", j+1, data[j].judul, data[j].Rating)
+		}
+	}
+}
+
+
+//=====================MAIN PROGRAM NO 2 = INPUT =================================================================
 //fungsi untuk melakukan input film baru
 func inputFilm(data *Films, i *int) {
 	var pilihan string
@@ -71,15 +123,15 @@ func inputFilm(data *Films, i *int) {
 		}
 	}
 }
-//Sistem untuk menghapus film menggunakan teknik sequential search untuk mencari film yang ingin dihapus, jika ditemukan maka data film tersebut akan dihapus dengan cara menggeser semua data setelahnya ke kiri
-func hapusFilm(data *Films, banyakfilm int) {
+//=====================MAIN PROGRAM NO 3 = HAPUS =================================================================
+func hapusFilm(data *Films, banyakfilm *int) {
 	var masukanJudul string
 	var find bool = false
 	var j int
 	var i int = 0
 	fmt.Println("Masukkan judul film yang ingin dihapus: ")
 	fmt.Scan(&masukanJudul)
-	for i < banyakfilm && !find {
+	for i < *banyakfilm && !find {
 		if data[i].judul == masukanJudul {
 			find = true
 		} else {
@@ -87,47 +139,15 @@ func hapusFilm(data *Films, banyakfilm int) {
 		}
 	}
 	if find {
-		for j = i; j < banyakfilm; j++ {
+		for j = i; j < *banyakfilm-1; j++ {
 			data[j] = data[j+1]
 		}
+		*banyakfilm--
+		fmt.Println("Film berhasil dihapus")
 	}
 }
 
-//fungsi untuk menampilkan film berdasarkan genre yang diinputkan
-func tampilFilm(data Films, i int) {
-	var pilihan string
-	var index, j int
-	fmt.Printf("\nMenampilkan film berdasarkan : \n1. Judul \n2. Genre \n3.Berdasarkan Tahun Rilis \n4. Berdasarkan Rating \nMasukan pilihan: ")
-	fmt.Scan(&pilihan)
-	switch pilihan {
-	case "1" :
-		UrutJudulFilm(&data, i)
-		index = TampilFilmJudul(data, i)
-		if index != -1 {
-			fmt.Printf("\nJudul: %s\nTahun Rilis: %d\nDeskripsi: %s\nGenre: %s\nRating: %.1f\n", data[index].judul, data[index].TahunRilis, data[index].Deskripsi, data[index].Genre, data[index].Rating)
-		} else {
-			fmt.Println("Film tidak ditemukan")
-		}
-	case "2" :
-		TampilFilmGenre(data)
-	case "3" :
-		tahunRilisFilm(&data, i)
-		fmt.Println("=======================================")
-		fmt.Printf("%-10s | %-20s | %-6s\n", "NO", "Judul", "Tahun Rilis")
-		fmt.Println("=======================================")
-		for j = 0; j < i; j++ {
-			fmt.Printf("%-10d | %-20s | %-6d\n", j+1, data[j].judul, data[j].TahunRilis)
-		}
-	case "4" :
-		ratingFilm(&data, i)
-		fmt.Println("=======================================")
-		fmt.Printf("%-10s | %-20s | %-6s\n", "NO", "Judul", "Rating")
-		fmt.Println("=======================================")
-		for j = 0; j < i; j++ {
-			fmt.Printf("%-10d | %-20s | %-6.1f\n", j+1, data[j].judul, data[j].Rating)
-		}
-	}
-}
+//=====================MAIN PROGRAM NO 4 = UBAH =================================================================
 //prosedur untuk mengubah data film menggunakan teknik sequential search untuk mencari film yang ingin diubah
 func ubahFilm(data *Films) {
 	var pilihan, masukanJudul, judulBaru, deskripsiBaru, genreBaru string
@@ -177,9 +197,25 @@ func ubahFilm(data *Films) {
 		fmt.Println("Film tidak ditemukan")
 	}
 }
+//==========================MAIN PROGRAM NO 5 = STATISTIK=========================================================
+	var dataGenre GENRES
+	var i, j int
+	fmt.Println("==================Statistik Cinema=================")
+	BanyakGenre(data, banyakfilm, &dataGenre, &j)
+	fmt.Println("Banyak Film per Genre: ")
+	for i = 0; i < j; i++ {
+		fmt.Printf("- %s : %d film\n", dataGenre[i].Genre, dataGenre[i].Count)
+	}
+	fmt.Println("===============================================")
+	fmt.Printf("Rata-rata rating film: %.1f\n", rataRating(data, banyakfilm))
+}
+
+
+
+////////PROSEDUR & FUNCTION/////////////////////////////////////////////////////////
 //SEARCH///////////////////////////////////////////////////////////////////////////
 //Fungsi untuk Menampilkan film berdasarkan genre yang diinputkan menggunakan teknik sequential search
-//akan menampilkan semua film yang memiliki genre yang dicari oleh pengguna atau Use
+//akan menampilkan semua film yang memiliki genre yang dicari oleh pengguna atau User
 func TampilFilmGenre(data Films) {
 var Genre string
 var i int
@@ -266,32 +302,27 @@ func tahunRilisFilm(data *Films, banyakfilm int) {
 }
 
 //STATISTIK////////////////////////////////////////////////////////////////////////////////
-func BanyakGenre(data Films, banyakfilm int) {
-	var genres [NMAX]string
-	var count [NMAX]int
-	var GenreUnik int = 0
+func BanyakGenre(data Films, banyakfilm int, dataGenre *GENRES, genreUnik *int) {
 	var GenreNow string
 	var found bool
 	var i, j int
+	*genreUnik = 0
 	for i = 0; i < banyakfilm; i++ {
 		GenreNow = data[i].Genre
 		found = false
 		j = 0
-		for j < GenreUnik && !found {
-			if genres[j] == GenreNow {
+		for j < *genreUnik && !found {
+			if dataGenre[j].Genre == GenreNow {
 				found = true
-				count[j]++
+				dataGenre[j].Count++
 			}
+			j++
 		}
 		if !found {
-			genres[GenreUnik] = GenreNow
-			count[GenreUnik] = 1
-			GenreUnik++
+			dataGenre[*genreUnik].Genre = GenreNow
+			dataGenre[*genreUnik].Count = 1
+			*genreUnik++
 		}
-	}
-	fmt.Println("Statistik Genre Film:")
-	for i = 0; i < GenreUnik; i++ {
-		fmt.Printf("- %s: %d film\n", genres[i], count[i])
 	}
 }
 
