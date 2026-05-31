@@ -87,7 +87,6 @@ func hapusFilm(data *Films, banyakfilm int) {
 		}
 	}
 	if find {
-		// Geser data ke kiri
 		for j = i; j < banyakfilm; j++ {
 			data[j] = data[j+1]
 		}
