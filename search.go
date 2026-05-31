@@ -23,7 +23,7 @@ var Find bool = false
 func TampilFilmJudul(data Films, i int) int {	
 var judul string
 var low, high, mid int
-	fmt.Printf("\nMasukan judul film :  ")
+	fmt.Printf("\nMasukan judul film yang mau ditampilkan :  ")
 	fmt.Scan(&judul)
 	low = 0
 	high = i - 1

@@ -1,4 +1,21 @@
 package main
+import "fmt"
+func MenampilkanJudulFilm(data Films, banyakfilm int) {
+	var pilihan string
+	var i int
+	fmt.Println("\nDaftar Film: ")
+	for i = 0; i < banyakfilm; i++ {
+		fmt.Printf("%d. %s\n", i+1, data[i].judul)
+		if i % 5 == 4 {
+			fmt.Println("\n==============================================")
+			fmt.Print("lanjut ke halaman berikutnya? (y/n): ")
+			fmt.Scan(&pilihan)
+			if pilihan == "n" {
+				banyakfilm = i
+			}
+		}
+	}
+}
 
 //STATISTIK////////////////////////////////////////////////////////////////////////////////
 func BanyakGenre(data Films, banyakfilm int, dataGenre *GENRES, genreUnik *int) {

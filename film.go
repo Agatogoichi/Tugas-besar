@@ -11,6 +11,7 @@ func tampilFilm(data Films, i int) {
 	fmt.Scan(&pilihan)
 	switch pilihan {
 	case "1" :
+		MenampilkanJudulFilm(data, i)
 		UrutJudulFilm(&data, i)
 		index = TampilFilmJudul(data, i)
 		if index != -1 {
@@ -19,7 +20,7 @@ func tampilFilm(data Films, i int) {
 			fmt.Println("Film tidak ditemukan")
 		}
 	case "2" :
-		fmt.Println("=======================================")
+		fmt.Println("==================================")
 		BanyakGenre(data, i, &dataGenre, &banyakGenre)
 		fmt.Println("Genre yang tersedia : ")
 		for j = 0; j < banyakGenre; j++ {
@@ -27,18 +28,32 @@ func tampilFilm(data Films, i int) {
 		}
 		TampilFilmGenre(data)
 	case "3" :
-		tahunRilisFilm(&data, i)
-		fmt.Println("=======================================")
+		fmt.Println("==================================")
+		fmt.Printf("Urutkan secara : \n1. Ascending\n2. Descending\nMasukan pilihan: ")
+		fmt.Scan(&pilihan)
+		if pilihan == "1" {
+		AscendingTahunFilm(&data, i)
+		} else if pilihan == "2" {
+		DescendingTahunFilm(&data, i)
+		}
+		fmt.Println("=================================================")
 		fmt.Printf("%-10s | %-20s | %-6s\n", "NO", "Judul", "Tahun Rilis")
-		fmt.Println("=======================================")
+		fmt.Println("=================================================")
 		for j = 0; j < i; j++ {
 			fmt.Printf("%-10d | %-20s | %-6d\n", j+1, data[j].judul, data[j].TahunRilis)
 		}
 	case "4" :
-		ratingFilm(&data, i)
-		fmt.Println("=======================================")
+		fmt.Println("==================================")
+		fmt.Printf("Urutkan secara : \n1. Ascending\n2. Descending\nMasukan pilihan: ")
+		fmt.Scan(&pilihan)
+		if pilihan == "1" {
+			AscendingRatingFilm(&data, i)
+		} else if pilihan == "2" {
+			DescendingRatingFilm(&data, i)
+		}
+		fmt.Println("================================================")
 		fmt.Printf("%-10s | %-20s | %-6s\n", "NO", "Judul", "Rating")
-		fmt.Println("=======================================")
+		fmt.Println("================================================")
 		for j = 0; j < i; j++ {
 			fmt.Printf("%-10d | %-20s | %-6.1f\n", j+1, data[j].judul, data[j].Rating)
 		}
@@ -148,14 +163,12 @@ func ubahFilm(data *Films) {
 func Statistik(data Films, banyakfilm int) {
 	var dataGenre GENRES
 	var i, j int
-	fmt.Println("==================Statistik Cinema=================")
+	fmt.Println("====================Statistik Cinema====================")
 	BanyakGenre(data, banyakfilm, &dataGenre, &j)
 	fmt.Println("Banyak Film per Genre: ")
 	for i = 0; i < j; i++ {
-		fmt.Printf("- %s : %d film\n", dataGenre[i].Genre, dataGenre[i].Count)
+		fmt.Printf("- %-20s : %d film\n", dataGenre[i].Genre, dataGenre[i].Count)
 	}
-	fmt.Println("===============================================")
+	fmt.Println("========================================================")
 	fmt.Printf("Rata-rata rating film: %.1f\n", rataRating(data, banyakfilm))
 }
-
-
