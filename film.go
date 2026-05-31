@@ -2,7 +2,7 @@ package main
 import "fmt"
 
 //=====================MAIN PROGRAM NO 1 = TAMPIL =================================================================
-//fungsi untuk menampilkan film berdasarkan genre yang diinputkan
+//fungsi untuk menampilkan film berdsarkan  Judu;l, Genre, Tahun Rilis, dan Rating
 func tampilFilm(data Films, i int) {
 	var dataGenre GENRES
 	var pilihan string
@@ -72,21 +72,21 @@ func inputFilm(data *Films, i *int) {
 }
 //=====================MAIN PROGRAM NO 3 = HAPUS =================================================================
 func hapusFilm(data *Films, banyakfilm *int) {
-	var masukanJudul string
+	var JudulDicari string
 	var find bool = false
 	var j int
 	var i int = 0
 	fmt.Println("Masukkan judul film yang ingin dihapus: ")
-	fmt.Scan(&masukanJudul)
+	fmt.Scan(&JudulDicari)
 	for i < *banyakfilm && !find {
-		if data[i].judul == masukanJudul {
+		if data[i].judul == JudulDicari {
 			find = true
 		} else {
 			i++
 		}
 	}
 	if find {
-		for j = i; j < *banyakfilm-1; j++ {
+		for j = i; j < *banyakfilm; j++ {
 			data[j] = data[j+1]
 		}
 		*banyakfilm--
@@ -104,7 +104,7 @@ func ubahFilm(data *Films) {
 	var jumlahFilm int = len(data)
 	var i int = 0
 
-	fmt.Println("Masukkan judul film yang ingin diubah: ")
+	fmt.Println("\nMasukkan judul film yang ingin diubah: ")
 	fmt.Scan(&masukanJudul)
 	for i < jumlahFilm && !find {
 		if data[i].judul == masukanJudul {
@@ -114,27 +114,27 @@ func ubahFilm(data *Films) {
 		}
 	}
 	if find {
-		fmt.Println("Masukkan informasi baru untuk film ini:\n1. Judul\n2. Tahun Rilis\n3. Deskripsi\n4. Genre\n5. Rating")
+		fmt.Printf("\nMasukkan informasi baru untuk film %s:\n1. Judul\n2. Tahun Rilis\n3. Deskripsi\n4. Genre\n5. Rating\nMasukan menu: ", data[i].judul)
 		fmt.Scan(&pilihan)
 		switch pilihan {
 			case "1" :
-			fmt.Println("Masukkan judul baru: ")
+			fmt.Print("Masukkan judul baru: ")
 			fmt.Scan(&judulBaru)
 			data[i].judul = judulBaru
 			case "2" :
-			fmt.Println("Masukkan tahun rilis baru: ")
+			fmt.Print("Masukkan tahun rilis baru: ")
 			fmt.Scan(&tahunRilisBaru)
 			data[i].TahunRilis = tahunRilisBaru
 			case "3" :
-			fmt.Println("Masukkan deskripsi baru: ")
+			fmt.Print("Masukkan deskripsi baru: ")
 			fmt.Scan(&deskripsiBaru)
 			data[i].Deskripsi = deskripsiBaru
 			case "4" :
-			fmt.Println("Masukkan genre baru: ")
+			fmt.Print("Masukkan genre baru: ")
 			fmt.Scan(&genreBaru)
 			data[i].Genre = genreBaru
 			case "5" :
-			fmt.Println("Masukkan rating baru: ")
+			fmt.Print("Masukkan rating baru: ")
 			fmt.Scan(&ratingBaru)
 			data[i].Rating = ratingBaru
 			default :

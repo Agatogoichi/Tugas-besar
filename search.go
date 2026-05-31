@@ -15,7 +15,7 @@ var Find bool = false
 		}
 	}
 	if !Find {
-		fmt.Println("tidak ada film dengan genre tersebut")
+		fmt.Printf("tidak ada film dengan genre tersebut\n")
 	}
 }
 
