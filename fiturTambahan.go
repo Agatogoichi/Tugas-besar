@@ -1,52 +1,72 @@
 package main
 import "fmt"
-func MenampilkanJudulFilm(data Films, banyakfilm int) {
-	var pilihan string
-	var i int
-	fmt.Println("\nDaftar Film: ")
-	for i = 0; i < banyakfilm; i++ {
-		fmt.Printf("%d. %s\n", i+1, data[i].judul)
-		if i % 5 == 4 {
-			fmt.Println("\n==============================================")
-			fmt.Print("lanjut ke halaman berikutnya? (y/n): ")
-			fmt.Scan(&pilihan)
-			if pilihan == "n" {
-				banyakfilm = i
-			}
-		}
+
+
+func page(banyakfilm int, N int) int {
+	var pages int
+	if banyakfilm % N == 0 {
+		pages = banyakfilm / N
+	} else {
+		pages = banyakfilm / N + 1
 	}
+	return pages
+}	
+
+func UpScreen() {
+    fmt.Print("\033[H\033[2J")
 }
 
-//STATISTIK////////////////////////////////////////////////////////////////////////////////
-func BanyakGenre(data Films, banyakfilm int, dataGenre *GENRES, genreUnik *int) {
-	var GenreNow string
-	var found bool
-	var i, j int
-	*genreUnik = 0
-	for i = 0; i < banyakfilm; i++ {
-		GenreNow = data[i].Genre
-		found = false
-		j = 0
-		for j < *genreUnik && !found {
-			if dataGenre[j].Genre == GenreNow {
-				found = true
-				dataGenre[j].Count++
-			}
-			j++
-		}
-		if !found {
-			dataGenre[*genreUnik].Genre = GenreNow
-			dataGenre[*genreUnik].Count = 1
-			*genreUnik++
-		}
-	}
+
+func CoverRatingTahun(S1, S2 string) {
+	fmt.Println("+----------------------------------------------------+")
+		fmt.Printf("| %-3s | %-29s | %-12s |\n", "NO", S1, S2)
+		fmt.Println("+----------------------------------------------------+")
+}
+func coverAscDesc() {
+		fmt.Println("+--------------------------------+")
+		fmt.Println("|      ASCENDING/DESCENDING      |")
+		fmt.Printf("+--------------pilihan-----------+\n| 1. ASCENDING	 	 	 |\n| 2. DESCENDING 		 |\n")
+		fmt.Println("+--------------------------------+")
+		fmt.Print("Pilih Menu (1-2): ")
 }
 
-func rataRating(data Films, banyakfilm int) float64 {
-	var total float64
-	var i int
-	for i = 0; i < banyakfilm; i++ {
-		total += data[i].Rating
-	}
-	return total / float64(banyakfilm)
+func coverTampilFilm() {
+	fmt.Println("+----------------------------------+")
+	fmt.Println("|         MENAMPILKAN FILM         |")
+	fmt.Println("+----------------------------------+")
+	fmt.Printf("| 1.  Judul		 	   |\n| 2.  Genre		 	   |\n| 3.  Berdasarkan Tahun Rilis      |\n| 4.  Berdasarkan Rating	   |\n| 5.  Kembali ke Menu Utama  	   |\n")
+	fmt.Println("+----------------------------------+")
+	fmt.Print("Pilih Menu (1-5): ")
+}
+
+func coverGenre() {
+	fmt.Println("+----------------------------------+")
+	fmt.Println("|         GENRE TERSEDIA           |")
+	fmt.Println("+----------------------------------+")
+}
+
+func CoverListFilm(S1, S2 string) {
+	fmt.Println("+----+------------------------------+------------------------------------------------------------------+")
+	fmt.Printf("| %-3s| %-29s| %-65s|\n", "NO", S1, S2)
+	fmt.Println("+----+------------------------------+------------------------------------------------------------------+")
+}
+
+
+func cover1Text(S1 string) {
+	fmt.Println("+----------------------------------+")
+	fmt.Printf("| %-32s |\n", S1)
+	fmt.Println("+----------------------------------+")
+}
+
+func cover1TextLong(S1 string) {
+	fmt.Println("+----------------------------------------------------+")
+	fmt.Printf("| %-50s |\n", S1)
+	fmt.Println("+----------------------------------------------------+")
+}
+
+func CoverExit() {
+	fmt.Println("+--------------------------------+")
+	fmt.Println("| TERIMA KASIH SUDAH             |")
+	fmt.Println("|       MENGGUNAKAN CINEMA GWEH! |")
+	fmt.Println("+--------------------------------+")
 }

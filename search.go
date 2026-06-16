@@ -6,16 +6,24 @@ func TampilFilmGenre(data Films) {
 var Genre string
 var i int
 var Find bool = false
-	fmt.Printf("\nMenampilkan film berdasarkan genre: ")
+	fmt.Printf("Mw cari film genre apa nih? :  ")
 	fmt.Scan(&Genre)
+	UpScreen()
+	for i = 0; i < NMAX; i++ {
+		if data[i].Genre == Genre {Find = true}
+	}
+	if Find {
+		fmt.Println("+---------------------------------------------+")
+		fmt.Printf("| %-43s |\n", "Film dengan Genre: "+Genre)
+		fmt.Println("+---------------------------------------------+")
+	}
 	for i = 0; i < NMAX; i++ {
 		if data[i].Genre == Genre {
-			fmt.Printf("\nJudul: %s\nTahun Rilis: %d\nDeskripsi: %s\nGenre: %s\nRating: %.1f\n", data[i].judul, data[i].TahunRilis, data[i].Deskripsi, data[i].Genre, data[i].Rating)
-			Find = true
+			fmt.Printf("| %-29s | Rating: %.1f |\n", data[i].judul, data[i].Rating)
 		}
 	}
 	if !Find {
-		fmt.Printf("tidak ada film dengan genre tersebut\n")
+		fmt.Printf("Genre yang kamu cari belum ada :3\n")
 	}
 }
 
@@ -23,7 +31,7 @@ var Find bool = false
 func TampilFilmJudul(data Films, i int) int {	
 var judul string
 var low, high, mid int
-	fmt.Printf("\nMasukan judul film yang mau ditampilkan :  ")
+	fmt.Printf("Masukan judul film yang mau ditampilkan :  ")
 	fmt.Scan(&judul)
 	low = 0
 	high = i - 1
