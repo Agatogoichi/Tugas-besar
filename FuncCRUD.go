@@ -26,8 +26,8 @@ func UpdateArrayFilm(data *Films, banyakfilm *int) {
 	}
 }
 
-//fungsi untuk melakukan input film baru
-func inputFilm(data *Films, i *int) {
+//program untuk melakukan input film baru
+func inputFilm(data *Films, i *int) { //dilakukan in/out agar array utama dapat berubah datanya
 	var pilihan string
 	var stop bool = false
 	for stop == false {
@@ -48,7 +48,7 @@ func inputFilm(data *Films, i *int) {
 			fmt.Print("Input rating film(0.0-5.0): ")
 			fmt.Scan(&data[*i].Rating)
 		} 
-		*i++
+		*i++ //menambahkan jumlah film dalam array
 		fmt.Println("+----------------------------------+")
 		fmt.Println("Apakah ingin input film lagi? (y/n): ")
 		fmt.Scan(&pilihan)
@@ -68,8 +68,8 @@ func hapusFilm(data *Films, banyakfilm *int) {
 	UpScreen()
 	cover1Text("HAPUS FILM")
 	fmt.Println("Judul film yang ingin dihapus: ")
-	fmt.Scan(&JudulDicari)
-	for i < *banyakfilm && !find {
+	fmt.Scan(&JudulDicari) 
+	for i < *banyakfilm && !find { //melakukan pencarian dengan sequential search
 		if data[i].judul == JudulDicari {
 			find = true
 		} else {
@@ -100,13 +100,13 @@ func ubahFilm(data *Films) {
 	var tahunRilisBaru int
 	var ratingBaru float64
 	var find bool = false
-	var jumlahFilm int = len(data)
+	var jumlahFilm int = len(data) //percobaan menggunakan Len untuk membaca banyak data sebagai ganti dari varible banyak film
 	var i int = 0
 	UpScreen()
 	cover1Text("UPDATE DATA FILM")
 	fmt.Print("| Film yang ingin diubah: ")
 	fmt.Scan(&masukanJudul)
-	for i < jumlahFilm && !find {
+	for i < jumlahFilm && !find { //pencarian data menggunakan teknik sequential dengan mencari varible judul
 		if data[i].judul == masukanJudul {
 			find = true
 		} else {

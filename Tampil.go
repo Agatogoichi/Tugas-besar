@@ -2,7 +2,7 @@ package main
 import "fmt"
 
 
-//fungsi untuk menampilkan film berdsarkan  Judu;l, Genre, Tahun Rilis, dan Rating
+//fungsi untuk menampilkan film berdsarkan  Judul, Genre, Tahun Rilis, dan Rating
 func tampilFilm(data Films, i int) {
 	var dataGenre GENRES
 	var pilihan,y_n string
@@ -14,12 +14,12 @@ func tampilFilm(data Films, i int) {
 	UpScreen()
 	
 	switch pilihan {
-	case "1" :
+	case "1" : //Menampilkan film dengan masukan judul
 		UpScreen()
-		UrutJudulFilm(&data, i)
-		ListJudulFilm(data, i)
-		index = TampilFilmJudul(data, i)
-		if index != -1 {
+		UrutJudulFilm(&data, i) //mengurutkan terlebih dahulu karena pencarian menggunakan binary search
+		ListJudulFilm(data, i) //Menampilkan judul judul yang sudah di data
+		index = TampilFilmJudul(data, i) //mencari menggunakan binary seach
+		if index != -1 { //ketika index bukan -1 otomatis indexnya adalah nomor array dari judul yang di cari
 			UpScreen()
 			fmt.Println("+-------------------------------+-----------------+-----------------+------------+")
 			fmt.Printf("| %-29s | %-15s | %-15s | %-10s |\n", "JUDUL", "GENRE", "TAHUN RILIS", "RATING")
@@ -30,7 +30,7 @@ func tampilFilm(data Films, i int) {
 			fmt.Println("+--------------------------------------------------------------------------------+")
 			fmt.Printf("sudah selesai mencari filmnya? (y/n): ")
 			fmt.Scan(&pilihan)
-			switch pilihan {
+			switch pilihan { //looping untuk menampilkan film
 			case "y" :
 				UpScreen()
 			case "n" :
@@ -41,7 +41,7 @@ func tampilFilm(data Films, i int) {
 				UpScreen()
 				tampilFilm(data, i)
 			}
-		} else {
+		} else { //ketika index -1 maka masuk else
 			UpScreen()
 			fmt.Println("+---------------------------------------+")
 			fmt.Println("| Film yang kamu cari belum ada nihh :( |")
@@ -49,7 +49,7 @@ func tampilFilm(data Films, i int) {
 			fmt.Println("+---------------------------------------+")
 			fmt.Printf("1. Cari Film lain || 2. Kembali ke Menu Utama\nMasukan pilihan: ")
 			fmt.Scan(&pilihan)
-			switch pilihan {
+			switch pilihan { // looping untuk menampilkan film
 			case "1" :
 				UpScreen()
 				tampilFilm(data, i)
@@ -61,19 +61,19 @@ func tampilFilm(data Films, i int) {
 			}
 		}
 
-	case "2" :
-		var PGS int = 1
+	case "2" : //menampilkan film berdasarkan genre
+		var PGS int = 1 //masukan agar pages awal adalah 1
 		UpScreen()
 		coverGenre()
-		BanyakGenre(data, i, &dataGenre, &banyakGenre)
-		pages = page(banyakGenre, 5)
-		for j = 0; j < banyakGenre; j++ {
+		BanyakGenre(data, i, &dataGenre, &banyakGenre) //Memisahkan genre ke beda array agar tidak tabrakan
+		pages = page(banyakGenre, 5) //untuk pages
+		for j = 0; j < banyakGenre; j++ { //mulai menampilkan genre
 			fmt.Printf("| %d. %-29s |\n", j+1, dataGenre[j].Genre)
-			if (j % 5 == 4) || (j == banyakGenre-1) {
+			if (j % 5 == 4) || (j == banyakGenre-1) { //membatasi 5 genre untuk 1 pages
 				fmt.Println("+----------------------------------+")
 				fmt.Printf("[%d/%d]Input 'y' untuk melanjutkan: ", PGS, pages)
 				fmt.Scan(&y_n)
-				if y_n == "y" && j != banyakGenre-1 {
+				if y_n == "y" && j != banyakGenre-1 { //untuk melanjutkan ke pages selanjutnya
 					UpScreen()
 					coverGenre()
 					PGS++
@@ -88,11 +88,11 @@ func tampilFilm(data Films, i int) {
 			}
 		}
 		fmt.Println("+----------------------------------+")
-		TampilFilmGenre(data)
+		TampilFilmGenre(data) //ketika keluar akan masuk ke program menampilkan genre
 		fmt.Println("+---------------------------------------------+")
 		fmt.Printf("sudah selesai mencari filmnya? (y/n): ")
 		fmt.Scan(&pilihan)
-		switch pilihan {
+		switch pilihan { //looping program utama tampilkan case genre
 		case "y" :
 			UpScreen()
 		case "n" :
@@ -110,7 +110,7 @@ func tampilFilm(data Films, i int) {
 		UpScreen()
 		coverAscDesc()
 		fmt.Scan(&pilihan)
-		if pilihan == "1" {
+		if pilihan == "1" { //Percabangan untuk memilih ingin ditampilkan secara ascending atau descending
 			AscendingTahunFilm(&data, i)
 			S1 = "Ascending"
 		} else if pilihan == "2" {
@@ -121,7 +121,8 @@ func tampilFilm(data Films, i int) {
 		CoverRatingTahun(("Judul " + S1), "Tahun Rilis")
 		for j = 0; j < i; j++ {
 			fmt.Printf("| %-3d | %-29s | %-12d |\n", j+1, data[j].judul, data[j].TahunRilis)
-				if (j % 5 == 4)	|| (j == i-1) {
+			//membatasi penmpilan hanya sampai 5 saja lalu di suruh melakukan input ingin lanjut pages selanjutnya atau tidak
+				if (j % 5 == 4)	|| (j == i-1) { 
 				fmt.Println("+----------------------------------------------------+")
 				fmt.Printf("[%d/%d]Input 'y' untuk melanjutkan: ", PGS, pages)
 				fmt.Scan(&y_n)
@@ -147,7 +148,7 @@ func tampilFilm(data Films, i int) {
 		UpScreen()
 		coverAscDesc()
 		fmt.Scan(&pilihan)
-		if pilihan == "1" {
+		if pilihan == "1" { //percabangan untuk memilih ingin tampilkan secara ascending atau desc.
 			AscendingRatingFilm(&data, i)
 			S1 = "Ascending"
 		} else if pilihan == "2" {
@@ -158,6 +159,7 @@ func tampilFilm(data Films, i int) {
 		CoverRatingTahun(("Judul " + S1), "Rating")
 		for j = 0; j < i; j++ {
 			fmt.Printf("| %-3d | %-29s | %-12.1f |\n", j+1, data[j].judul, data[j].Rating)
+			//membatasi penmpilan hanya sampai 5 saja lalu di suruh melakukan input ingin lanjut pages selanjutnya atau tidak
 			if (j % 5 == 4)	|| (j == i-1) {
 				fmt.Println("+----------------------------------------------------+")
 				fmt.Printf("[%d/%d]Input 'y' untuk melanjutkan: ", PGS, pages)
@@ -177,7 +179,7 @@ func tampilFilm(data Films, i int) {
 				}
 			}
 		}
-	case "5" :
+	case "5" : //akan langsung keluar dari program dan menggeser layar ke atas
 		UpScreen()
 	default :
 		fmt.Println("Pilihan tidak valid")
@@ -185,6 +187,7 @@ func tampilFilm(data Films, i int) {
 	}
 }
 
+//menampilkan list judul film yangg ada pada array program utama
 func ListJudulFilm(data Films, banyakfilm int) {
 	var pilihan string
 	var i, pages,PGS int
@@ -193,7 +196,7 @@ func ListJudulFilm(data Films, banyakfilm int) {
 	CoverListFilm("JUDUL FILM", "DESKRIPSI")
 	for i = 0; i < banyakfilm; i++ {
 		fmt.Printf("| %-3d| %-29s| %-65s|\n", i+1, data[i].judul, data[i].Deskripsi)
-		if (i % 5 == 4) || (i == banyakfilm-1) {
+		if (i % 5 == 4) || (i == banyakfilm-1) { //membatasi sampai 5 output
 			fmt.Println("+----+------------------------------+------------------------------------------------------------------+")
 			fmt.Printf("|Kamu belum dapet yang dicari?!%-67s[%d/%d]|\n", "", PGS, pages)
 			fmt.Printf("|Insert apapun jika sudah dapat yang kamu cari :3%-54s|\n", "")

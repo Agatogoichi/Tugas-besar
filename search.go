@@ -1,7 +1,7 @@
 package main
 import "fmt"
 
-
+//program untuk menampilkan seluruh film dengan genre yang dicari menggunakan Sequential Search
 func TampilFilmGenre(data Films) {
 var Genre string
 var i int
@@ -9,15 +9,15 @@ var Find bool = false
 	fmt.Printf("Mw cari film genre apa nih? :  ")
 	fmt.Scan(&Genre)
 	UpScreen()
-	for i = 0; i < NMAX; i++ {
+	for i = 0; i < NMAX; i++ { //awalan mencari tau apakah ada genre yang dicari
 		if data[i].Genre == Genre {Find = true}
 	}
-	if Find {
+	if Find { //ketika ditemukan akan mengeluarkan cover untuk genre
 		fmt.Println("+---------------------------------------------+")
 		fmt.Printf("| %-43s |\n", "Film dengan Genre: "+Genre)
 		fmt.Println("+---------------------------------------------+")
 	}
-	for i = 0; i < NMAX; i++ {
+	for i = 0; i < NMAX; i++ { //sequential dan langsung menampilkan film-film dengan genre yang dicari 
 		if data[i].Genre == Genre {
 			fmt.Printf("| %-29s | Rating: %.1f |\n", data[i].judul, data[i].Rating)
 		}

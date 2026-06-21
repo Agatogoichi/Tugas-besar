@@ -15,4 +15,3 @@ type CountGenre struct {
 	Count int
 }
 type GENRES [NMAX]CountGenre
-

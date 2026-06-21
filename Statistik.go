@@ -27,30 +27,33 @@ func Statistik(data Films, banyakfilm int) {
 		UpScreen()
 	}
 }
-func BanyakGenre(data Films, banyakfilm int, dataGenre *GENRES, genreUnik *int) {
+//program untuk memasukan genre
+func BanyakGenre(data Films, banyakfilm int, dataGenre *GENRES, genreUnik *int) { 
+	//dataGenre adalah untuk menyimpan genre yang ada didalam array genre serta melakukan penjumlahan untuk setiap genre unik
+	//GenreUnik adalah banyaknya genre unik yang ada pada array utama (fungsi mirip seperti banyakfilm)
 	var GenreNow string
 	var found bool
 	var i, j int
-	*genreUnik = 0
+	*genreUnik = 0 //genre unik dimulai dari 0 
 	for i = 0; i < banyakfilm; i++ {
-		GenreNow = data[i].Genre
-		found = false
+		GenreNow = data[i].Genre //memasukan genre yang ingin dicari duplkatnya (pada awalnya mulai akan false di percabbangan jadi otomatis masuk genre unik) 
+		found = false 
 		j = 0
-		for j < *genreUnik && !found {
+		for j < *genreUnik && !found { //membandingkan di array genre
 			if dataGenre[j].Genre == GenreNow {
-				found = true
-				dataGenre[j].Count++
+				found = true //ketika masuk found akan true dan count pada genre akan bertambah
+				dataGenre[j].Count++ 
 			}
 			j++
 		}
-		if !found {
+		if !found { //ketika data genreNow tidak ditemukan duplikatnya maka akan masuk ke genre Unik dan dimasukan ke array genre
 			dataGenre[*genreUnik].Genre = GenreNow
-			dataGenre[*genreUnik].Count = 1
-			*genreUnik++
+			dataGenre[*genreUnik].Count = 1 //melakuan initial bahwa Count dimulai dari 1 karena sudah ada genre itu sendiri
+			*genreUnik++ //banyak genre unik bertambah
 		}
 	}
 }
-
+//program menghitung rating keseluruh film
 func rataRating(data Films, banyakfilm int) float64 {
 	var total float64
 	var i int

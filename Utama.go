@@ -5,7 +5,7 @@ func main() {
 	var Data Films
 	var Kondisi int
 	var stop bool = false
-	var i int = 11
+	var i int = 11 //ini adalah deklarsi awal dari banyak film yang akan terus dibawa di setiap codenya
 	//data awal yang sudah dimasukan sejak
 	Data[0] = Film{"One_Piece", 1994, "Sebuah_Kisah_Perjalanan_Luffy_dan_Krunya_Mencari_One_Piece", "Adventure", 4.0}
 	Data[1] = Film{"Naruto", 2002, "Kisah_Perjalanan_Naruto", "Action", 4.5}

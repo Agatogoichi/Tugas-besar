@@ -1,7 +1,7 @@
 package main
 import "fmt"
 
-
+//fungsi menghitung page
 func page(banyakfilm int, N int) int {
 	var pages int
 	if banyakfilm % N == 0 {
@@ -11,12 +11,12 @@ func page(banyakfilm int, N int) int {
 	}
 	return pages
 }	
-
+//fungsi untuk menaikan tampilan di cmd
 func UpScreen() {
     fmt.Print("\033[H\033[2J")
 }
 
-
+//fungsi fungsi untuk menampilkan cover atas atau bawah
 func CoverRatingTahun(S1, S2 string) {
 	fmt.Println("+----------------------------------------------------+")
 		fmt.Printf("| %-3s | %-29s | %-12s |\n", "NO", S1, S2)
